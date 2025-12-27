@@ -233,5 +233,5 @@ pyenv
 Vagrantfile
 
 # Anki generated files
-/ankidesktop/anki_data/
-/anki-helper/anki_data/
+/anki-helper/
+anki_data/

@@ -12,7 +12,7 @@ Usage (with `anki-helper` as active directory):
 import json
 import discord
 from discord.ext import commands
-import config, create
+import config, create, gcpport
 
 # Initialize intents
 intents = discord.Intents.default()
@@ -50,4 +50,5 @@ async def add(ctx, arg1, arg2):
         await ctx.send(f"Uh oh, something went wrong: `"+str(e)+"`")
         print(f'Error: {e}')
 
+gcpport.start_gcp_port(8080)
 bot.run(config.DISCORD_KEY)
