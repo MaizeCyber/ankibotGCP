@@ -5,15 +5,11 @@ import threading
 """ Function lifted from https://github.com/Tardsquad/tardsquad-discord-bot/blob/main/tardsquad_discord_bot/gcp_port.py"""
 
 def start_server(port):
-    logger = logging.getLogger("gcp_port")
-    logger.info(f"Will bind socket and listen on TCP localhost:{port}")
-
     sock = socket.socket()
     sock.bind(("", port))
     sock.listen(8)
     while True:
         conn, addr = sock.accept()
-        logger.info(f"Got connection from {addr}")
         conn.send(
             (
                 "Thank you for connecting, but we're only listening here because Google Cloud Run "
@@ -30,8 +26,6 @@ def start_gcp_port(port):
     to listen to the from envionment specified $PORT.
     Reference: https://emilwypych.com/2020/10/25/how-to-run-discord-bot-on-cloud-run/
     """
-    logger = logging.getLogger("gcp_port")
-    logger.info("Spawning of a new thread for GCP port listener.")
 
     daemon = threading.Thread(name="daemon_server", target=start_server, args=(port,), daemon=True)
     daemon.start()
