@@ -41,3 +41,7 @@ Configure firewall to allow connection with Discord
 
 Setup CI/CD via github actions
 
+
+Secrets
+
+Startup Script

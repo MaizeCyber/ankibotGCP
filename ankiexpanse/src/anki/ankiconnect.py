@@ -12,11 +12,15 @@ Examples:
 import json
 import urllib.request
 import urllib.error
+import os
+
 
 """ This is edited to work with a Docker container rather than local host. If you are not running this with docker. uncomment the DEFAULT_URL line and replace the docker url.
 DEFAULT_URL = "http://localhost:8765"
 """
-DEFAULT_URL = "http://host.docker.internal:8765"
+DESKTOP_IP = os.getenv("DESKTOP_LOCAL_IP")
+
+DEFAULT_URL = "http://" + DESKTOP_IP + ":8765"
 url = DEFAULT_URL
 
 def reset_url() -> None:
