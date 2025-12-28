@@ -24,13 +24,13 @@ resource "google_secret_manager_secret_version" "openai_version" {
   secret_data_wo_version = var.secret_trigger
 }
 
-resource "google_secret_manager_secret_iam_member" "ankibot_secret_access" {
-  for_each  = toset([
-    google_secret_manager_secret.discord_token.id,
-    google_secret_manager_secret.openai_key.id
-  ])
-  secret_id = each.value
-  role      = "roles/secretmanager.secretAccessor"
-  member    = "serviceAccount:${var.sa_email}"
-}
+#resource "google_secret_manager_secret_iam_member" "ankibot_secret_access" {
+#  for_each  = toset([
+#    google_secret_manager_secret.discord_token.id,
+#    google_secret_manager_secret.openai_key.id
+#  ])
+#  secret_id = each.value
+#  role      = "roles/secretmanager.secretAccessor"
+#  member    = "serviceAccount:${var.sa_email}"
+#}
 
