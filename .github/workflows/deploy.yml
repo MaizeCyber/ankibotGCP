@@ -75,8 +75,9 @@ jobs:
 
     - uses: 'google-github-actions/auth@v3'
       with:
-        project_id: 'minecraftserver-482021'
+        project_id: 'ankiconnect-482403'
         workload_identity_provider: 'projects/334515927364/locations/global/workloadIdentityPools/gh-action-minecraft-pool/providers/github-provider'
+        service_account: 'github-deployer@ankiconnect-482403.iam.gserviceaccount.com'
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform

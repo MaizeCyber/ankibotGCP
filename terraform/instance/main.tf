@@ -22,7 +22,4 @@ resource "google_compute_instance" "anki_desktop" {
     scopes = ["cloud-platform"]
   }
 
-  metadata = {
-    shutdown-script = file("${path.module}/shutdown.sh")
-  }
 }
