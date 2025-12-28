@@ -13,9 +13,12 @@ resource "google_project_iam_member" "dev_ops" {
 
 # 2. Grant the Workload Identity User role to the GitHub identity
 resource "google_service_account_iam_member" "wif_binding" {
-  service_account_id = google_service_account.github_deployer.name
-  role               = "roles/iam.workloadIdentityUser"
+  for_each = toset([
+    "roles/iam.workloadIdentityUser",
+    "roles/iam.serviceAccountTokenCreator"
+  ])
 
-  # This string references the Hub Project's Pool
-  member = "principalSet://iam.googleapis.com/projects/334515927364/locations/global/workloadIdentityPools/gh-action-minecraft-pool/attribute.repository/maizecyber/ankibotGCP"
+  service_account_id = google_service_account.github_deployer.name
+  role               = each.key
+  member             = "principalSet://iam.googleapis.com/projects/334515927364/locations/global/workloadIdentityPools/gh-action-minecraft-pool/attribute.repository/maizecyber/ankibotGCP"
 }
