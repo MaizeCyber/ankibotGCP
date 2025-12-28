@@ -16,6 +16,10 @@ module "ankibot-service" {
   sa_email = google_service_account.anki_sa.email
   container_name = "docker.io/maizecyber/ankibot:gcp"
   local_ip = module.anki-desktop-vm.local_ip
+  # Secrets
+  discord_bot_token = var.discord_bot_token
+  openai_api_key    = var.openai_api_key
+  secret_trigger    = var.secret_trigger
 }
 
 resource "google_service_account" "anki_sa" {
@@ -34,3 +38,4 @@ resource "google_storage_bucket_iam_member" "backup_writer" {
   role   = "roles/storage.objectAdmin"
   member = "serviceAccount:${google_service_account.anki_sa.email}"
 }
+
