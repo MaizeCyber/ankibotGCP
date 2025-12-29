@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     env:
-      TF_VAR_openai_key: ${{ secrets.OPENAI_KEY }}
+      TF_VAR_openai_api_key: ${{ secrets.OPENAI_KEY }}
       TF_VAR_discord_bot_token: ${{ secrets.DISCORD_TOKEN }}
       TF_VAR_secret_trigger: ${{ github.run_id }}
 
