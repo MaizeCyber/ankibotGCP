@@ -33,7 +33,7 @@ resource "google_project_iam_member" "anki_sa_secrets" {
   member  = "serviceAccount:${google_service_account.anki_sa.email}"
 }
 
-resource "google_project_iam_member" "anki_sa_secrets" {
+resource "google_project_iam_member" "anki_sa_run_admin" {
   project = "ankiconnect-482403"
   role    = "roles/run.admin"
   member  = "serviceAccount:${google_service_account.anki_sa.email}"
