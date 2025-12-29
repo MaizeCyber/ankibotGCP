@@ -3,6 +3,7 @@ resource "google_compute_instance" "anki_desktop" {
   zone         = var.instance_zone
   machine_type = var.instance_type
 
+  allow_stopping_for_update = true
   tags = ["anki-connect"]
 
   boot_disk {
@@ -21,5 +22,16 @@ resource "google_compute_instance" "anki_desktop" {
     email  = var.sa_email
     scopes = ["cloud-platform"]
   }
+  attached_disk {
+    source      = google_compute_disk.anki_data.id
+    device_name = "data-disk"
+  }
 
+}
+
+resource "google_compute_disk" "anki_data" {
+  name  = "anki-data-disk"
+  size  = 50 # GB
+  zone  = var.instance_zone
+  type  = "pd-ssd"
 }
