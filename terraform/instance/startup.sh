@@ -85,8 +85,10 @@ fi
 if ! command -v anki &> /dev/null; then
   # Get Anki Installable
   echo "Installing Anki"
+  cd "$HOME_DIR"
   wget https://github.com/ankitects/anki/releases/download/25.09/anki-launcher-25.09-linux.tar.zst
-  tar xaf anki-launcher-25.09-linux.tar.zst
+  sudo apt install zstd
+  tar -xaf anki-launcher-25.09-linux.tar.zst
   cd anki-launcher-25.09-linux
   sudo ./install.sh
 
@@ -104,5 +106,5 @@ EOF
 
 fi
 
-chown -R "$TARGET_USER:$TARGET_USER" "$HOME_DIR"
+sudo chown -R "$TARGET_USER:$TARGET_USER" "$HOME_DIR"
 echo "Startup script complete"
