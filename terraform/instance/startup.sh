@@ -44,14 +44,14 @@ if ! command -v anki &> /dev/null; then
   # Add anki to autostart
   mkdir -p ~/.config/autostart
   cat <<EOF > ~/.config/autostart/anki.desktop
-  [Desktop Entry]
-  Type=Application
-  Exec=anki
-  Name=Anki
-  Comment=Start Anki on login
-  X-GNOME-Autostart-enabled=true
-  EOF
+[Desktop Entry]
+Type=Application
+Exec=anki
+Name=Anki
+Comment=Start Anki on login
+X-GNOME-Autostart-enabled=true
+EOF
 
 fi
-anki
+anki &
 

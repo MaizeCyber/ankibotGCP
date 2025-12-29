@@ -11,8 +11,8 @@ module "anki-desktop-vm" {
 module "ankibot-service" {
   source           = "./cloud_run"
   instance_name    = "anki-desktop-1"
-  instance_network = google_compute_network.ankinetwork.self_link
-  instance_subnetwork = google_compute_subnetwork.anki_internal_range.self_link
+  instance_network = google_compute_network.ankinetwork.id
+  instance_subnetwork = google_compute_subnetwork.anki_internal_range.id
   sa_email = google_service_account.anki_sa.email
   container_name = "docker.io/maizecyber/ankibot:gcp"
   local_ip = module.anki-desktop-vm.local_ip
@@ -27,10 +27,4 @@ resource "google_service_account" "anki_sa" {
   display_name = "Anki Server Service Account"
 }
 
-resource "google_project_iam_member" "logging_writer" {
-  project = "minecraftserver-482021"
-  role    = "roles/logging.logWriter"
-  member  = "serviceAccount:${google_service_account.anki_sa.email}"
-  depends_on = [google_project_service.service_api]
-}
 
