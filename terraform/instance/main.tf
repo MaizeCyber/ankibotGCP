@@ -24,7 +24,7 @@ resource "google_compute_instance" "anki_desktop" {
   }
   attached_disk {
     source      = google_compute_disk.anki_data.id
-    device_name = "data-disk"
+    device_name = google_compute_disk.anki_data.name
   }
 
 }
