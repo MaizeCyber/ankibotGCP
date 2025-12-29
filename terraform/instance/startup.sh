@@ -22,7 +22,7 @@ echo "Checking for persistent disk at $DISK_PATH..."
 # Format the disk only if it doesn't have a filesystem yet
 if ! blkid "$DISK_PATH" > /dev/null; then
   echo "New disk detected. Formatting with ext4..."
-  mkfs.ext4 -m 0 -E lazy_itable_init=0,lazy_journal_init=0,discard "$DISK_PATH"
+  sudo mkfs.ext4 -F -E lazy_itable_init=0,lazy_journal_init=0,discard "$DISK_PATH"
 fi
 
 # Mount the disk to a temporary location first if /home is not empty

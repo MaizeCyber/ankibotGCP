@@ -19,6 +19,21 @@ resource "google_compute_firewall" "allow_client_traffic" {
   source_ranges = ["10.0.0.0/24"]
 }
 
+resource "google_compute_firewall" "allow_ssh_traffic" {
+  name = "allow-ssh-traffic"
+  # RESOURCE properties go here
+  network = google_compute_network.ankinetwork.self_link
+  target_tags = ["anki-connect"]
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+    }
+  allow {
+    protocol = "icmp"
+    }
+  source_ranges = ["35.235.240.0/20"]
+}
+
 resource "google_compute_subnetwork" "anki_internal_range" {
   name          = "anki-desktop-internal-range"
   ip_cidr_range = "10.2.0.0/16"
