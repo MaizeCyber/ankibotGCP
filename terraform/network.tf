@@ -8,7 +8,7 @@ resource "google_compute_firewall" "allow_client_traffic" {
   name = "allow-client-traffic"
   # RESOURCE properties go here
   network = google_compute_network.ankinetwork.self_link
-  target_tags = ["anki_connect"]
+  target_tags = ["anki-connect"]
   allow {
     protocol = "tcp"
     ports    = ["8765"]

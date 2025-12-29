@@ -3,7 +3,7 @@ resource "google_compute_instance" "anki_desktop" {
   zone         = var.instance_zone
   machine_type = var.instance_type
 
-  tags = ["anki_connect"]
+  tags = ["anki-connect"]
 
   boot_disk {
     initialize_params {
