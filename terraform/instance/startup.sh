@@ -19,34 +19,28 @@ DISK_PATH="/dev/disk/by-id/$DEVICE_NAME"
 
 echo "Checking for persistent disk at $DISK_PATH..."
 
-# 1. Wait for the disk to be attached by GCP
-while [ ! -b "$DISK_PATH" ]; do
-  echo "Waiting for disk $DEVICE_NAME to attach..."
-  sleep 2
-done
-
-# 2. Format the disk only if it doesn't have a filesystem yet
+# Format the disk only if it doesn't have a filesystem yet
 if ! blkid "$DISK_PATH" > /dev/null; then
   echo "New disk detected. Formatting with ext4..."
   mkfs.ext4 -m 0 -E lazy_itable_init=0,lazy_journal_init=0,discard "$DISK_PATH"
 fi
 
-# 3. Mount the disk to a temporary location first if /home is not empty
+# Mount the disk to a temporary location first if /home is not empty
 # (This ensures we don't lose the initial user directory created by GCP)
 mkdir -p /mnt/tmp_home
 mount "$DISK_PATH" /mnt/tmp_home
 
-# 4. If the disk is empty, move existing home data into it
+# If the disk is empty, move existing home data into it
 if [ -z "$(ls -A /mnt/tmp_home)" ]; then
   echo "Persistent disk is empty. Initializing with current /home data..."
   cp -a /home/. /mnt/tmp_home/
 fi
 
-# 5. Unmount and perform the final mount to /home
+# Unmount and perform the final mount to /home
 umount /mnt/tmp_home
 mount "$DISK_PATH" "$MOUNT_PATH"
 
-# 6. Ensure it mounts automatically on reboots
+# Ensure it mounts automatically on reboots
 if ! grep -qs "$MOUNT_PATH" /etc/fstab; then
   echo "$DISK_PATH $MOUNT_PATH ext4 discard,defaults,nofail 0 2" >> /etc/fstab
 fi
