@@ -36,8 +36,9 @@ if ! command -v startplasma-x11 &> /dev/null; then
   sudo bash -c 'echo "exec /etc/X11/Xsession /usr/bin/startplasma-x11" > /etc/chrome-remote-desktop-session'
 
   # Authorize Chrome RD Account
-  echo "Running authorizating script"
-  DISPLAY= /opt/google/chrome-remote-desktop/start-host --code="4/0ATX87lPpXp8bdy3qxjCC1HeY4jFiUdtvEMuNhCrNtWFZXAWgLeoosOWkjx4lHa7P9wxYBA" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$(hostname)
+  echo "Running authorization script"
+  DISPLAY= /opt/google/chrome-remote-desktop/start-host --code="4/0ATX87lN7Rz9LbxNoA7xWNN4OkjEIjBgiyHfd2AAB8a02mXcfmqlsiW27Eg0qmyv_pOQ5jg" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$(hostname)
+fi
 
 if ! command -v anki &> /dev/null; then
   # Get Anki Installable
