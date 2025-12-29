@@ -18,6 +18,10 @@ MOUNT_PATH="/home"
 DISK_PATH="/dev/disk/by-id/$DEVICE_NAME"
 
 echo "Checking for persistent disk at $DISK_PATH..."
+while [ ! -b "$DISK_PATH" ]; do
+  echo "Waiting for disk $DEVICE_NAME to attach..."
+  sleep 2
+done
 
 # Format the disk only if it doesn't have a filesystem yet
 if ! blkid "$DISK_PATH" > /dev/null; then
