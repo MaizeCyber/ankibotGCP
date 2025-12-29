@@ -27,4 +27,17 @@ resource "google_service_account" "anki_sa" {
   display_name = "Anki Server Service Account"
 }
 
+resource "google_project_iam_member" "anki_sa_secrets" {
+  project = "ankiconnect-482403"
+  role    = "roles/secretmanager.secretAccessor"
+  member  = "serviceAccount:${google_service_account.anki_sa.email}"
+}
+
+resource "google_project_iam_member" "anki_sa_secrets" {
+  project = "ankiconnect-482403"
+  role    = "roles/run.admin"
+  member  = "serviceAccount:${google_service_account.anki_sa.email}"
+}
+
+
 
