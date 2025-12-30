@@ -17,6 +17,8 @@ Register OpenAI API Account and Key
 
 Register Discord App and Bot Token
 
+## Setup - Terraform Desktop (Recommended)
+
 ## Specs
 
 Two GCP Cloud Run containers, one for anki desktop, one for anki-helper
