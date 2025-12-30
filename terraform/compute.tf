@@ -2,7 +2,7 @@ module "anki-desktop-vm" {
   source           = "./instance"
   instance_name    = "anki-desktop-1"
   instance_zone    = "us-east4-a"
-  instance_type     = "e2-small"
+  instance_type     = "e2-medium"
   instance_network = google_compute_network.ankinetwork.id
   instance_subnetwork = google_compute_subnetwork.anki_internal_range.id
   sa_email = google_service_account.anki_sa.email
