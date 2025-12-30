@@ -9,9 +9,6 @@ echo "Apt is free. Proceeding with installation."
 # Exit immediately if a command fails
 set -e
 
-#!/bin/bash
-set -e
-
 # --- DISK MOUNTING LOGIC ---
 DEVICE_NAME="google-anki-data-disk"
 MOUNT_PATH="/home"
@@ -51,13 +48,18 @@ fi
 
 echo "Persistent disk mounted successfully to $MOUNT_PATH"
 
-# --- REST OF YOUR INSTALLATION SCRIPT ---
-# Proceed with apt updates, KDE, Chrome RD, and Anki...
+# --- REST OF THE INSTALLATION SCRIPT ---
 
-TARGET_USER=$(whoami)
+TARGET_USER=$(find /home -maxdepth 1 -mindepth 1 -type d -not -name "lost+found" -printf '%f\n' | head -n 1)
+
+# Fallback if the above fails (e.g., if you've already mounted over /home)
+if [ -z "$TARGET_USER" ]; then
+    TARGET_USER=$(curl -s "http://metadata.google.internal/computeMetadata/v1/instance/attributes/ssh-keys" -H "Metadata-Flavor: Google" | cut -d: -f1 | head -n 1)
+fi
+
 HOME_DIR="/home/$TARGET_USER"
 
-echo "Running apt update"
+echo "Running apt update"h
 sudo apt-get update
 
 if ! command -v startplasma-x11 &> /dev/null; then
@@ -87,7 +89,7 @@ if ! command -v anki &> /dev/null; then
   echo "Installing Anki"
   wget -P "$HOME_DIR" https://github.com/ankitects/anki/releases/download/25.09/anki-launcher-25.09-linux.tar.zst
   sudo apt install zstd
-  tar -xaf "$HOME_DIR/anki-launcher-25.09-linux.tar.zst"
+  sudo tar -xaf "$HOME_DIR/anki-launcher-25.09-linux.tar.zst"
   sudo ."$HOME_DIR/anki-launcher-25.09-linux/install.sh"
 
   # Add anki to autostart
