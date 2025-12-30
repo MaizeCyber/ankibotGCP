@@ -90,11 +90,13 @@ if ! command -v startplasma-x11 &> /dev/null; then
 
 fi
 
+sudo apt install --assume-yes zstd libatomic1 libxcb-cursor-dev
+
 if [ ! -d "$HOME_DIR/anki-launcher-25.09-linux" ]; then
   # Get Anki Installable
   echo "Installing Anki"
   wget -P "$HOME_DIR" https://github.com/ankitects/anki/releases/download/25.09/anki-launcher-25.09-linux.tar.zst
-  sudo apt install --assume-yes zstd libatomic1 libxcb-cursor-dev
+
   sudo tar -xaf "$HOME_DIR/anki-launcher-25.09-linux.tar.zst"
 
   # Add anki to autostart

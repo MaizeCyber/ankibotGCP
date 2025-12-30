@@ -16,7 +16,7 @@ resource "google_compute_firewall" "allow_client_traffic" {
   allow {
     protocol = "icmp"
     }
-  source_ranges = ["10.0.0.0/24"]
+  source_ranges = ["10.2.0.0/16"]
 }
 
 resource "google_compute_firewall" "allow_ssh_traffic" {
