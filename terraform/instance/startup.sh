@@ -59,7 +59,9 @@ fi
 
 HOME_DIR="/home/$TARGET_USER"
 
-echo "Running apt update"h
+echo "Target user: $TARGET_USER"
+
+echo "Running apt update"
 sudo apt-get update
 
 if ! command -v startplasma-x11 &> /dev/null; then
