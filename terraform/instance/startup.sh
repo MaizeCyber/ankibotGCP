@@ -85,12 +85,10 @@ fi
 if ! command -v anki &> /dev/null; then
   # Get Anki Installable
   echo "Installing Anki"
-  cd "$HOME_DIR"
-  wget https://github.com/ankitects/anki/releases/download/25.09/anki-launcher-25.09-linux.tar.zst
+  wget -P "$HOME_DIR" https://github.com/ankitects/anki/releases/download/25.09/anki-launcher-25.09-linux.tar.zst
   sudo apt install zstd
-  tar -xaf anki-launcher-25.09-linux.tar.zst
-  cd anki-launcher-25.09-linux
-  sudo ./install.sh
+  tar -xaf "$HOME_DIR/anki-launcher-25.09-linux.tar.zst"
+  sudo ."$HOME_DIR/anki-launcher-25.09-linux/install.sh"
 
   # Add anki to autostart
   echo "Adding anki to autostart"
