@@ -1,6 +1,6 @@
 resource "google_cloud_run_v2_service" "ankibot" {
-  name     = var.instance_name
-  location = "us-east4"
+  name     = var.run_name
+  location = var.run_region
   ingress = "INGRESS_TRAFFIC_INTERNAL_ONLY"
   deletion_protection = false # set to "true" in production
 
@@ -43,9 +43,8 @@ resource "google_cloud_run_v2_service" "ankibot" {
 
     vpc_access {
       network_interfaces {
-        network    = var.instance_network
-        subnetwork = var.instance_subnetwork
-        tags = ["anki-connect"]
+        network    = var.run_network
+        subnetwork = var.run_subnetwork
       }
     }
   }

@@ -62,6 +62,9 @@ jobs:
       TF_VAR_openai_api_key: ${{ secrets.OPENAI_KEY }}
       TF_VAR_discord_bot_token: ${{ secrets.DISCORD_TOKEN }}
       TF_VAR_secret_trigger: ${{ github.run_id }}
+      TF_VAR_project_name: ${{ secrets.PROJECT_NAME }}
+      TF_VAR_project_region: ${{ secrets.PROJECT_REGION }}
+      TF_VAR_project_zone: ${{ secrets.PROJECT_ZONE }}
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -76,9 +79,9 @@ jobs:
 
     - uses: 'google-github-actions/auth@v3'
       with:
-        project_id: 'ankiconnect-482403'
+        project_id: ${{ secrets.PROJECT_NAME }}
         workload_identity_provider: 'projects/334515927364/locations/global/workloadIdentityPools/gh-action-minecraft-pool/providers/github-provider'
-        service_account: 'github-deployer@ankiconnect-482403.iam.gserviceaccount.com'
+        service_account: 'github-deployer@${{ secrets.PROJECT_NAME }}.iam.gserviceaccount.com'
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform

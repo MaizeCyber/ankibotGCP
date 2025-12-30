@@ -4,7 +4,7 @@ resource "google_compute_instance" "anki_desktop" {
   machine_type = var.instance_type
 
   allow_stopping_for_update = true
-  tags = ["anki-connect"]
+  tags = ["anki-connect", "anki-ssh"]
 
   boot_disk {
     initialize_params {

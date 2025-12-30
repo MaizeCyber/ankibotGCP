@@ -1,9 +1,10 @@
-variable "instance_network" {}
+variable "run_network" {}
 variable "sa_email" {}
-variable "instance_name" {}
+variable "run_name" {}
 variable "container_name" {}
-variable "instance_subnetwork" {}
+variable "run_subnetwork" {}
 variable "local_ip" {}
+variable "run_region" {}
 
 variable "discord_bot_token" {
   type      = string

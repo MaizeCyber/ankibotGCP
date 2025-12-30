@@ -1,7 +1,7 @@
 provider "google" {
-  project     = "ankiconnect-482403"
-  region      = "us-east4"
-  zone        = "us-east4-a"
+  project     = var.project_name
+  region      = var.project_region
+  zone        = var.project_zone
 }
 
 resource "google_project_service" "service_api" {

@@ -23,7 +23,7 @@ resource "google_compute_firewall" "allow_ssh_traffic" {
   name = "allow-ssh-traffic"
   # RESOURCE properties go here
   network = google_compute_network.ankinetwork.self_link
-  target_tags = ["anki-connect"]
+  target_tags = ["anki-ssh"]
   allow {
     protocol = "tcp"
     ports    = ["22"]
@@ -37,7 +37,7 @@ resource "google_compute_firewall" "allow_ssh_traffic" {
 resource "google_compute_subnetwork" "anki_internal_range" {
   name          = "anki-desktop-internal-range"
   ip_cidr_range = "10.2.0.0/16"
-  region        = "us-east4"
+  region        = var.project_region
   network       = google_compute_network.ankinetwork.self_link
 }
 
