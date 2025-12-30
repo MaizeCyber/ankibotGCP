@@ -45,6 +45,7 @@ resource "google_cloud_run_v2_service" "ankibot" {
       network_interfaces {
         network    = var.instance_network
         subnetwork = var.instance_subnetwork
+        tags = ["anki-connect"]
       }
     }
   }
