@@ -19,31 +19,20 @@ Register Discord App and Bot Token
 
 ## Setup - Terraform Desktop (Recommended)
 
-## Specs
-
-Two GCP Cloud Run containers, one for anki desktop, one for anki-helper
-
-These containers must communicate over the same VPC network
-
-Ankidesktop must be available over port 3000 internally to login and install the ankiconnect installation
-
-Ankidesktop must be able to communicate with the Discord API
+Work in progress...
 
 ## To do
 
-Verify anki desktop container functionality
+Change from prefix "!add" to slash commands to trigger webhook interaction
+```
+@tree.command(name="add", description="Add two numbers")
+async def add(interaction: discord.Interaction, a: int, b: int):
+    await interaction.response.send_message(f"Result: {a + b}")
+```
+> Once your code is updated to handle HTTP POST requests 
+> Go to the Discord Developer Portal. 
+> Select your App -> General Information. 
+> Find Interactions Endpoint URL. 
+> Paste your Cloud Run service URL here.
 
-Verify anki help container functionality
-
-Configure VPC Network
-
-Configure external access to protect port 3000 access
-
-Configure firewall to allow connection with Discord
-
-Setup CI/CD via github actions
-
-
-Secrets
-
-Startup Script
+Switch from OpenAI to built-in vertexAI

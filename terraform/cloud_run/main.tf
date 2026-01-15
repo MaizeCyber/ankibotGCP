@@ -6,6 +6,10 @@ resource "google_cloud_run_v2_service" "ankibot" {
 
   template {
     service_account = var.sa_email
+    scaling {
+      max_instance_count = 1
+      min_instance_count = 1
+    }
     containers {
       image = var.container_name
       ports {
