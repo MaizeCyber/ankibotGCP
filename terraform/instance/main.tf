@@ -4,15 +4,15 @@ resource "google_compute_instance" "anki_desktop" {
   machine_type = var.instance_type
 
   allow_stopping_for_update = true
-  tags = ["anki-connect", "anki-ssh"]
+  tags                      = ["anki-connect", "anki-ssh"]
 
   boot_disk {
     initialize_params {
       image = "debian-cloud/debian-12"
-      }
+    }
   }
   network_interface {
-    network = var.instance_network
+    network    = var.instance_network
     subnetwork = var.instance_subnetwork
   }
 
@@ -31,8 +31,8 @@ resource "google_compute_instance" "anki_desktop" {
 }
 
 resource "google_compute_disk" "anki_data" {
-  name  = "anki-data-disk"
-  size  = 50 # GB
-  zone  = var.instance_zone
-  type  = "pd-ssd"
+  name = "anki-data-disk"
+  size = 50 # GB
+  zone = var.instance_zone
+  type = "pd-ssd"
 }

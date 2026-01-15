@@ -7,30 +7,30 @@ resource "google_compute_network" "ankinetwork" {
 resource "google_compute_firewall" "allow_client_traffic" {
   name = "allow-client-traffic"
   # RESOURCE properties go here
-  network = google_compute_network.ankinetwork.self_link
+  network     = google_compute_network.ankinetwork.self_link
   target_tags = ["anki-connect"]
   allow {
     protocol = "tcp"
     ports    = ["8765"]
-    }
+  }
   allow {
     protocol = "icmp"
-    }
+  }
   source_ranges = ["10.2.0.0/16"]
 }
 
 resource "google_compute_firewall" "allow_ssh_traffic" {
   name = "allow-ssh-traffic"
   # RESOURCE properties go here
-  network = google_compute_network.ankinetwork.self_link
+  network     = google_compute_network.ankinetwork.self_link
   target_tags = ["anki-ssh"]
   allow {
     protocol = "tcp"
     ports    = ["22"]
-    }
+  }
   allow {
     protocol = "icmp"
-    }
+  }
   source_ranges = ["35.235.240.0/20"]
 }
 

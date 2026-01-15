@@ -1,5 +1,4 @@
 FROM python:3.9
-# Or any preferred Python version.
 WORKDIR /usr/src/app
 EXPOSE 8080
 COPY ankiexpanse ankiexpanse

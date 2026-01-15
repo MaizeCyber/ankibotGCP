@@ -1,7 +1,7 @@
 resource "google_cloud_run_v2_service" "ankibot" {
-  name     = var.run_name
-  location = var.run_region
-  ingress = "INGRESS_TRAFFIC_INTERNAL_ONLY"
+  name                = var.run_name
+  location            = var.run_region
+  ingress             = "INGRESS_TRAFFIC_INTERNAL_ONLY"
   deletion_protection = false # set to "true" in production
 
   template {
@@ -25,7 +25,7 @@ resource "google_cloud_run_v2_service" "ankibot" {
         name = "DISCORD_BOT_TOKEN"
         value_source {
           secret_key_ref {
-            secret = google_secret_manager_secret.discord_token.secret_id
+            secret  = google_secret_manager_secret.discord_token.secret_id
             version = "latest"
           }
         }
@@ -34,7 +34,7 @@ resource "google_cloud_run_v2_service" "ankibot" {
         name = "OPENAI_API_KEY"
         value_source {
           secret_key_ref {
-            secret = google_secret_manager_secret.openai_key.secret_id
+            secret  = google_secret_manager_secret.openai_key.secret_id
             version = "latest"
           }
         }

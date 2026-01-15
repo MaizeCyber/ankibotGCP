@@ -1,6 +1,6 @@
 variable "discord_bot_token" {
   type      = string
-  ephemeral = true  # Matches the child module
+  ephemeral = true # Matches the child module
   sensitive = true
 }
 
@@ -16,13 +16,13 @@ variable "secret_trigger" {
 }
 
 variable "project_name" {
-  type    = string
+  type = string
 }
 
 variable "project_region" {
-  type    = string
+  type = string
 }
 
 variable "project_zone" {
-  type    = string
+  type = string
 }
