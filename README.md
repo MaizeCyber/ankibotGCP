@@ -13,8 +13,6 @@ I want to be able to deploy my modified anki-helper application and anki desktop
 
 ## Requirements
 
-Register OpenAI API Account and Key
-
 Register Discord App and Bot Token
 
 ## Setup - Terraform Desktop (Recommended)
