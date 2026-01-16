@@ -35,5 +35,4 @@ async def add(interaction: discord.Interaction, a: int, b: int):
 > Find Interactions Endpoint URL. 
 > Paste your Cloud Run service URL here.
 
-Switch from OpenAI to built-in vertexAI
 Suspend VM when requests have not been received for period
