@@ -20,4 +20,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: maizecyber/ankibot:gcp
+          tags: maizecyber/ankibot:gcpv2
