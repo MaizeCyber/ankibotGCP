@@ -11,6 +11,7 @@ from google.genai import types
 JSON_INSTRUCTION = "You are a system that only outputs JSON."
 
 def generate(system_prompt: str, user_prompt: str, json_schema: dict) -> str:
+    print("Starting generate function...")
     client = genai.Client(
     vertexai=True,
     project=os.getenv("GOOGLE_CLOUD_PROJECT"),
@@ -25,7 +26,7 @@ def generate(system_prompt: str, user_prompt: str, json_schema: dict) -> str:
             response_schema=json_schema
         )
     )
-
+    print(f"Generate response:{str(response)}")
     return str(response)
 
 def generate_sound(text: str, deckname: str) -> str:
@@ -48,7 +49,9 @@ def generate_json(
         user_prompt: str,
         json_schema: dict,
         examples: str = "",) -> dict:
+
     json_prompt = JSON_INSTRUCTION + system_prompt + examples
+    print(f"json_prompt:{json_prompt}")
     generated_json: str = generate(json_prompt, user_prompt, json_schema)
     return json.loads(generated_json)
 
