@@ -5,14 +5,9 @@ variable "container_name" {}
 variable "run_subnetwork" {}
 variable "local_ip" {}
 variable "run_region" {}
+variable "project_id" {}
 
 variable "discord_bot_token" {
-  type      = string
-  ephemeral = true
-  sensitive = true
-}
-
-variable "openai_api_key" {
   type      = string
   ephemeral = true
   sensitive = true

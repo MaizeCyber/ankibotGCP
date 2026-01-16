@@ -17,6 +17,10 @@ You:
         "Key": "sencillo",
         "Meaning": "simple",
         "Part of speech": "adjective",
+        "Gender": "",
+        "Plural": "",
+        "Conjugation": "",
+        "Tense": "",
         "Audio": "",
         "Homophone": "",
         "Homograph": "",
@@ -43,7 +47,7 @@ You:
         "Gender": "",
         "Plural": "",
         "Conjugation": "",
-        "Tense": "",
+        "Tense": "infinitive",
         "Audio": "",
         "Homophone": "",
         "Homograph": "",
@@ -181,3 +185,110 @@ You:
     }}
 }}
 """
+
+
+ROMANTIC_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "deckName": {"type": "string", "default": "spanish"},
+        "modelName": {"type": "string", "default": "romantic"},
+        "tags": {
+            "type": "array",
+            "items": {"type": "string", "default": "AI-Generated"}
+        },
+        "fields": {
+            "type": "object",
+            "properties": {
+                "Key": {"type": "string", "description": "The Spanish word being translated"},
+                "Meaning": {"type": "string", "description": "Primary English translation"},
+                "Part of speech": {"type": "string", "description": "e.g., noun, verb, adjective"},
+                "Gender": {"type": "string", "description": "For nouns: masculine or feminine. Empty otherwise."},
+                "Plural": {"type": "string", "description": "Plural form if irregular. Empty otherwise."},
+                "Conjugation": {"type": "string", "description": "Verb conjugation notes if applicable."},
+                "Tense": {"type": "string", "description": "Verb tense if applicable."},
+                "Audio": {"type": "string", "default": ""},
+                "Homophone": {"type": "string", "default": ""},
+                "Homograph": {"type": "string", "default": ""},
+                "Sentence": {"type": "string", "description": "A natural example sentence in Spanish."},
+                "SentenceCloze": {"type": "string", "description": "The sentence with the word replaced by [ ]."},
+                "SentenceMeaning": {"type": "string", "description": "English translation of the sentence."},
+                "SentenceAudio": {"type": "string", "default": ""},
+                "SentenceImage": {"type": "string", "default": ""}
+            },
+            "required": ["Key", "Meaning", "Part of speech", "Sentence", "SentenceCloze"]
+        }
+    },
+    "required": ["deckName", "modelName", "tags", "fields"]
+}
+
+JAPONIC_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "deckName": {"type": "string", "default": "japanese"},
+        "modelName": {"type": "string", "default": "japonic"},
+        "tags": {
+            "type": "array",
+            "items": {"type": "string", "default": "AI-Generated"}
+        },
+        "fields": {
+            "type": "object",
+            "properties": {
+                "Key": {"type": "string", "description": "The Japanese word (Kanji or Kana)"},
+                "Hiragana": {"type": "string", "description": "The reading in Hiragana only"},
+                "Meaning": {"type": "string"},
+                "Part of speech": {"type": "string"},
+                "Audio": {"type": "string", "default": ""},
+                "Homophone": {"type": "string", "default": ""},
+                "Homograph": {"type": "string", "default": ""},
+                "PitchAccent": {"type": "string", "description": "Pitch accent pattern (e.g., Heiban, Atamadaka)"},
+                "Sentence": {"type": "string", "description": "Natural Japanese sentence (Kanji + Kana)"},
+                "SentenceCloze": {"type": "string", "description": "Sentence with the Key replaced by [ ]"},
+                "SentenceHiragana": {"type": "string", "description": "The entire sentence in Hiragana"},
+                "SentenceFurigana": {"type": "string", "description": "Sentence with furigana in format: 漢字[かんじ]"},
+                "SentenceMeaning": {"type": "string"},
+                "SentenceAudio": {"type": "string", "default": ""},
+                "SentenceImage": {"type": "string", "default": ""}
+            },
+            "required": ["Key", "Hiragana", "Meaning", "Sentence", "SentenceFurigana"]
+        }
+    },
+    "required": ["deckName", "modelName", "tags", "fields"]
+}
+
+HSK_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "deckName": {"type": "string", "default": "chinese"},
+        "modelName": {"type": "string", "default": "HSK"},
+        "tags": {
+            "type": "array",
+            "items": {"type": "string", "default": "AI-Generated"}
+        },
+        "fields": {
+            "type": "object",
+            "properties": {
+                "Key": {"type": "string", "description": "关键词（通常为简体）"},
+                "Simplified": {"type": "string", "description": "简体中文字符"},
+                "Traditional": {"type": "string", "description": "繁体中文字符"},
+                "Pinyin.1": {"type": "string", "description": "带声调符号的拼音，例如: piányi"},
+                "Pinyin.2": {"type": "string", "description": "带数字声调的拼音，例如: pian2yi5"},
+                "Meaning": {"type": "string"},
+                "Part of speech": {"type": "string"},
+                "Audio": {"type": "string", "default": ""},
+                "Homophone": {"type": "string", "default": ""},
+                "Homograph": {"type": "string", "default": ""},
+                "SentenceSimplified": {"type": "string", "description": "简体中文例句"},
+                "SentenceTraditional": {"type": "string", "description": "繁体中文例句"},
+                "SentenceSimplifiedCloze": {"type": "string", "description": "简体中文完形填空例句"},
+                "SentenceTraditionalCloze": {"type": "string", "description": "繁体中文完形填空例句"},
+                "SentencePinyin.1": {"type": "string", "description": "例句的带声调符号拼音"},
+                "SentencePinyin.2": {"type": "string", "description": "例句的数字声调拼音"},
+                "SentenceMeaning": {"type": "string", "description": "例句的英文翻译"},
+                "SentenceAudio": {"type": "string", "default": ""},
+                "SentenceImage": {"type": "string", "default": ""}
+            },
+            "required": ["Key", "Simplified", "Traditional", "Pinyin.1", "Meaning", "SentenceSimplified"]
+        }
+    },
+    "required": ["deckName", "modelName", "tags", "fields"]
+}

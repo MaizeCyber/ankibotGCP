@@ -4,12 +4,6 @@ variable "discord_bot_token" {
   sensitive = true
 }
 
-variable "openai_api_key" {
-  type      = string
-  ephemeral = true
-  sensitive = true
-}
-
 variable "secret_trigger" {
   type    = string
   default = "1"

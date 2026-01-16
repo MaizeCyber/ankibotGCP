@@ -4,6 +4,3 @@ provider "google" {
   zone    = var.project_zone
 }
 
-resource "google_project_service" "service_api" {
-  service = "cloudresourcemanager.googleapis.com"
-}

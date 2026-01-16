@@ -1,31 +1,32 @@
 import os
 import json
-from openai import OpenAI
 from pathlib import Path
 from gtts import gTTS
 import hashlib
 import random
 import string
-
+from google import genai
+from google.genai import types
 
 JSON_INSTRUCTION = "You are a system that only outputs JSON."
 
-api_key = os.getenv("OPENAI_API_KEY")
-client = OpenAI(api_key=api_key)
+def generate(system_prompt: str, user_prompt: str, json_schema: dict) -> str:
+    client = genai.Client(
+    vertexai=True,
+    project=os.getenv("GOOGLE_CLOUD_PROJECT"),
+    location=os.getenv("GOOGLE_CLOUD_REGION"))
 
-def generate(system_prompt: str, user_prompt: str) -> str:
-    completion = client.chat.completions.create(
-        #modified model to gpt-3.5-turbo-0125
-        model="gpt-3.5-turbo-0125",
-        response_format={"type": "json_object"},
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt}
-        ]
+    response = client.models.generate_content(
+        model='gemini-2.5-flash',
+        contents=user_prompt,
+        config=types.GenerateContentConfig(
+            system_instruction=system_prompt,
+            response_json_schema=json_schema
+        ),
     )
-    return completion.choices[0].message.content
 
-#generates a sound by calling the OpenAI API
+    return str(response)
+
 def generate_sound(text: str, deckname: str) -> str:
     unique_filename = add_hash_suffix_to_file_stem("speech.mp3")
     print(f"Generating sound file: {unique_filename}")
@@ -44,9 +45,10 @@ def generate_sound(text: str, deckname: str) -> str:
 def generate_json(
         system_prompt: str,
         user_prompt: str,
-        examples: str = "") -> dict:
+        json_schema: dict,
+        examples: str = "",) -> dict:
     json_prompt = JSON_INSTRUCTION + system_prompt + examples
-    generated_json: str = generate(json_prompt, user_prompt)
+    generated_json: str = generate(json_prompt, user_prompt, json_schema)
     return json.loads(generated_json)
 
 #randon file name generator for sound file

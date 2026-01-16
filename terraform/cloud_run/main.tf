@@ -35,13 +35,12 @@ resource "google_cloud_run_v2_service" "ankibot" {
         }
       }
       env {
-        name = "OPENAI_API_KEY"
-        value_source {
-          secret_key_ref {
-            secret  = google_secret_manager_secret.openai_key.secret_id
-            version = "latest"
-          }
-        }
+        name  = "GOOGLE_CLOUD_PROJECT"
+        value = var.project_id
+      }
+      env {
+        name  = "GOOGLE_CLOUD_REGION"
+        value = var.run_region
       }
     }
 
