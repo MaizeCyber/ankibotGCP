@@ -21,8 +21,9 @@ def generate(system_prompt: str, user_prompt: str, json_schema: dict) -> str:
         contents=user_prompt,
         config=types.GenerateContentConfig(
             system_instruction=system_prompt,
-            response_json_schema=json_schema
-        ),
+            response_mime_type='application/json',
+            response_schema=json_schema
+        )
     )
 
     return str(response)

@@ -190,8 +190,8 @@ You:
 ROMANTIC_SCHEMA = {
     "type": "object",
     "properties": {
-        "deckName": {"type": "string", "default": "spanish"},
-        "modelName": {"type": "string", "default": "romantic"},
+        "deckName": {"type": "string", "description": "this value should always be 'spanish'"},
+        "modelName": {"type": "string", "description": "this value should always be 'romantic'"},
         "tags": {
             "type": "array",
             "items": {"type": "string", "default": "AI-Generated"}
@@ -224,8 +224,8 @@ ROMANTIC_SCHEMA = {
 JAPONIC_SCHEMA = {
     "type": "object",
     "properties": {
-        "deckName": {"type": "string", "default": "japanese"},
-        "modelName": {"type": "string", "default": "japonic"},
+        "deckName": {"type": "string", "description": "this value should always be 'japanese'"},
+        "modelName": {"type": "string", "description": "this value should always be 'japonic'"},
         "tags": {
             "type": "array",
             "items": {"type": "string", "default": "AI-Generated"}
@@ -258,8 +258,8 @@ JAPONIC_SCHEMA = {
 HSK_SCHEMA = {
     "type": "object",
     "properties": {
-        "deckName": {"type": "string", "default": "chinese"},
-        "modelName": {"type": "string", "default": "HSK"},
+        "deckName": {"type": "string", "description": "this value should always be 'chinese'"},
+        "modelName": {"type": "string", "description": "this value should always be 'HSK'"},
         "tags": {
             "type": "array",
             "items": {"type": "string", "default": "AI-Generated"}
