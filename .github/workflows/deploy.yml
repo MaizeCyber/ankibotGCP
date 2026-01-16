@@ -57,6 +57,7 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '#deploy')
     environment: production
     env:
       TF_VAR_discord_bot_token: ${{ secrets.DISCORD_TOKEN }}
@@ -106,7 +107,6 @@ jobs:
 
     # This job only runs if the commit message contains "#deploy"
     - name: Terraform Apply
-      if: contains(github.event.head_commit.message, '#deploy')
 
       run: terraform apply -auto-approve -input=false
 

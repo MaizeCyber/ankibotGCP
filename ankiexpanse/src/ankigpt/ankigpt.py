@@ -13,7 +13,7 @@ from . import prompts
 def generate_note(query: str, deckname: str) -> dict:
     print("Generating note...")
     print(f"Query:{query}")
-    print(f"Deackname:{deckname}")
+    print(f"Deck name:{deckname}")
     if deckname == "chinese":
         promptInstruction = prompts.EXAMPLES_HSK
         json_schema = prompts.HSK_SCHEMA
@@ -23,8 +23,7 @@ def generate_note(query: str, deckname: str) -> dict:
     elif deckname == "japanese":
         promptInstruction = prompts.EXAMPLES_JAPONIC
         json_schema = prompts.JAPONIC_SCHEMA
-    print(f"prompt instruction:{promptInstruction}")
-    print(f"prompt instruction:{str(json_schema)}")
+
     system_prompt = "".join(
         [
             prompts.ANKIHELPER_INSTRUCTION,
