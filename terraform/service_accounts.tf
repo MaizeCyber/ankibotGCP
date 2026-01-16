@@ -20,3 +20,9 @@ resource "google_project_iam_member" "anki_sa_vertex_admin" {
   role    = "roles/aiplatform.user"
   member  = "serviceAccount:${google_service_account.anki_sa.email}"
 }
+
+resource "google_project_iam_member" "logging_writer" {
+  project = var.project_name
+  role    = "roles/logging.logWriter"
+  member  = "serviceAccount:${google_service_account.anki_sa.email}"
+}
