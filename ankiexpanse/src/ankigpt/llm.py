@@ -26,7 +26,7 @@ def generate(system_prompt: str, user_prompt: str, json_schema: dict) -> str:
             response_schema=json_schema
         )
     )
-    print(f"Generated response:{str(response)}")
+    print(f"Generated response:{response.text}")
     return response.text
 
 def generate_sound(text: str, deckname: str) -> str:
