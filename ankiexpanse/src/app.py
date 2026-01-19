@@ -10,45 +10,102 @@ Usage (with `anki-helper` as active directory):
 """
 
 import json
-import discord
-from discord.ext import commands
-import config, create, gcpport
+import os
+import threading
+import requests
+from flask import Flask, jsonify, request
+from nacl.signing import VerifyKey
+from nacl.exceptions import BadSignatureError
 
-# Initialize intents
-intents = discord.Intents.default()
-intents.message_content = True #v2
-intents.messages = True  # Enable message intents
+from gcpresume import start_instance, suspend_instance
+import config
+import create
 
-bot = commands.Bot(command_prefix="!", intents=intents)
+app = Flask(__name__)
 
-@bot.command(name="add")
-async def add(ctx, arg1, arg2):
-    #check number of arguments
-    if len(arg1) == 0 or len(arg2) == 0:
-        await ctx.send("Please provide a query and a deck name, separated by a space. Use quotes for phrases.")
-        return
-    query = arg1
-    deckname = arg2
-    # Remove the command prefix and the command name from the message to get the raw arguments
-    try: 
-        await ctx.send(f"Creating an example with query `{query}` in deck '{deckname}'. . .")
+PUBLIC_KEY = config.DISCORD_PUBLIC_KEY
+APP_ID = config.DISCORD_APP_ID  # You'll need your Application ID now
+
+
+def verify_signature(request):
+    signature = request.headers.get('X-Signature-Ed25519')
+    timestamp = request.headers.get('X-Signature-Timestamp')
+    body = request.data.decode("utf-8")
+    if not signature or not timestamp:
+        return False
+    verify_key = VerifyKey(bytes.fromhex(PUBLIC_KEY))
+    try:
+        verify_key.verify(f'{timestamp}{body}'.encode(), bytes.fromhex(signature))
+        return True
+    except BadSignatureError:
+        return False
+
+
+def background_task(interaction_token, query, deckname):
+    """This function runs in the background to handle the heavy lifting."""
+    # The URL to edit the 'Thinking...' message
+    url = f"https://discord.com/api/v10/webhooks/{APP_ID}/{interaction_token}/messages/@original"
+
+    try:
+        # Your original logic
         note_json, note_id = create.generate_and_add_card(query, deckname)
-        confirmation = "".join(
-            [
-                "Done! Added **",
-                note_json["fields"]["Key"],
-                "** to deck **",
-                note_json["deckName"],
-                "**."
-            ]
+
+        confirmation = f"Done! Added **{note_json['fields']['Key']}** to deck **{note_json['deckName']}**."
+        formatted_json = json.dumps(note_json, indent=2, ensure_ascii=False)
+        content = f"{confirmation}\n```json\n{formatted_json}```"
+
+        thread_suspend = threading.Thread(
+            target=suspend_instance
         )
-        note_json = json.dumps(note_json, indent=2, ensure_ascii=False)
-        message = f"{confirmation}\n```json\n{note_json}```"
-        await ctx.send(message)
+        thread_suspend.start()
 
     except Exception as e:
-        await ctx.send(f"Uh oh, something went wrong: `"+str(e)+"`")
-        print(f'Error: {e}')
+        content = f"Uh oh, something went wrong: `{str(e)}`"
 
-gcpport.start_gcp_port(8080)
-bot.run(config.DISCORD_KEY)
+    # Send the follow-up message to Discord
+    requests.patch(url, json={"content": content})
+
+
+@app.route('/interactions', methods=['POST'])
+def interactions():
+    if not verify_signature(request):
+        return "Unauthorized", 401
+
+    data = request.json
+
+    if data.get("type") == 1:
+        return jsonify({"type": 1})
+
+    if data.get("type") == 2:
+        command_name = data['data']['name']
+        interaction_token = data['token']
+
+        if command_name == "add":
+            options = {opt['name']: opt['value'] for opt in data['data'].get('options', [])}
+            query = options.get('query')
+            deckname = options.get('deckname')
+
+            # Start the instance if its paused or stopped
+            thread_start_instance = threading.Thread(
+                target=start_instance,
+            )
+            thread_start_instance.start()
+
+            # 1. Start the background thread
+            thread = threading.Thread(
+                target=background_task,
+                args=(interaction_token, query, deckname)
+            )
+            thread.start()
+
+            # Type 5 = DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE
+            return jsonify({
+                "type": 5
+            })
+
+    return jsonify({"type": 4, "data": {"content": "Unknown command"}})
+
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)

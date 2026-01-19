@@ -26,3 +26,8 @@ urllib3==2.1.0
 yarl==1.9.4
 gTTS==2.5.4
 google-genai
+flask
+PyNaCl
+gunicorn
+google-api-core
+google-cloud-compute

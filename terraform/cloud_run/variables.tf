@@ -5,7 +5,10 @@ variable "container_name" {}
 variable "run_subnetwork" {}
 variable "local_ip" {}
 variable "run_region" {}
+variable "run_zone" {}
 variable "project_id" {}
+variable "instance_name" {}
+variable "discord_app_id" {}
 
 variable "discord_bot_token" {
   type      = string

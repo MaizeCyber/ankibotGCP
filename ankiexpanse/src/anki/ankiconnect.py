@@ -14,7 +14,6 @@ import urllib.request
 import urllib.error
 import os
 
-
 """ This is edited to work with a Docker container rather than local host. If you are not running this with docker. uncomment the DEFAULT_URL line and replace the docker url.
 DEFAULT_URL = "http://localhost:8765"
 """
@@ -53,7 +52,7 @@ def invoke(action: str, **params) -> dict:
 
     #additional debugging
     try:
-        request = urllib.request.urlopen(urllib.request.Request(url, request_json))
+        request = urllib.request.urlopen(urllib.request.Request(url, request_json), timeout = 10)
 
     except urllib.error.URLError as e:
         raise Exception(f"Failed to reach the server: {e.reason}")

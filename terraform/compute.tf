@@ -18,6 +18,9 @@ module "ankibot-service" {
   sa_email       = google_service_account.anki_sa.email
   container_name = "docker.io/maizecyber/ankibot:gcpv1.1"
   local_ip       = module.anki-desktop-vm.local_ip
+  instance_name     = "anki-desktop-1"
+  run_zone          = var.project_zone
+  discord_app_id = var.discord_app_id
   # Secrets
   discord_bot_token = var.discord_bot_token
   secret_trigger    = var.secret_trigger

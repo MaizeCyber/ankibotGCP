@@ -35,12 +35,24 @@ resource "google_cloud_run_v2_service" "ankibot" {
         }
       }
       env {
+        name  = "DISCORD_APP_ID"
+        value = var.discord_app_id
+      }
+      env {
         name  = "GOOGLE_CLOUD_PROJECT"
         value = var.project_id
       }
       env {
         name  = "GOOGLE_CLOUD_REGION"
         value = var.run_region
+      }
+      env {
+        name  = "GOOGLE_CLOUD_ZONE"
+        value = var.run_zone
+      }
+      env {
+        name  = "INSTANCE_NAME"
+        value = var.instance_name
       }
     }
 
