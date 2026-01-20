@@ -4,6 +4,10 @@ variable "discord_bot_token" {
   sensitive = true
 }
 
+variable "discord_app_id" {
+  type = string
+}
+
 variable "secret_trigger" {
   type    = string
   default = "1"
