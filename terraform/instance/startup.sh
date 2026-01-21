@@ -115,3 +115,4 @@ fi
 
 sudo chown -R "$TARGET_USER:$TARGET_USER" "$HOME_DIR"
 echo "Startup script complete"
+anki

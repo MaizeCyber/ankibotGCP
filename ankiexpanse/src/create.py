@@ -1,6 +1,6 @@
-import config
-import anki.anki as anki
-import ankigpt.ankigpt as ankigpt
+from ankiexpanse.src import config
+import ankiexpanse.src.anki.anki as anki
+import ankiexpanse.src.ankigpt.ankigpt as ankigpt
 import base64
 from pathlib import Path
 

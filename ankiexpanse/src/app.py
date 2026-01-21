@@ -17,9 +17,9 @@ from flask import Flask, jsonify, request
 from nacl.signing import VerifyKey
 from nacl.exceptions import BadSignatureError
 
-from gcpresume import start_instance, suspend_instance
-import config
-import create
+from ankiexpanse.src.gcpresume import start_instance, suspend_instance
+from ankiexpanse.src import config
+from ankiexpanse.src import create
 
 app = Flask(__name__)
 
