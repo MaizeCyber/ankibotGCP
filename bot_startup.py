@@ -5,7 +5,7 @@ discord_app_id = input()
 print('Enter the key for your discord bot:')
 discord_key = input()
 
-url = f"https://discord.com/api/v10/applications/{discord_app_id}/commands"
+url = f"https://discord.com/api/v10/applications/{str(discord_app_id)}/commands"
 headers = {"Authorization": f"Bot {discord_key}"}
 
 json_data = {
