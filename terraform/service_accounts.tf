@@ -26,3 +26,9 @@ resource "google_project_iam_member" "logging_writer" {
   role    = "roles/logging.logWriter"
   member  = "serviceAccount:${google_service_account.anki_sa.email}"
 }
+
+resource "google_project_iam_member" "anki_sa_instance_admin" {
+  project = var.project_name
+  role    = "roles/compute.instanceAdmin.v1"
+  member  = "serviceAccount:${google_service_account.anki_sa.email}"
+}
