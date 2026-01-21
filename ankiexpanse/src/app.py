@@ -72,36 +72,43 @@ def interactions():
         return "Unauthorized", 401
 
     data = request.json
-
+    print(f"Data Type: {str(data.get)}")
+    print(f"Data:{str(data)}")
     if data.get("type") == 1:
         return jsonify({"type": 1})
 
     if data.get("type") == 2:
         command_name = data['data']['name']
         interaction_token = data['token']
-
+        print(f"Command name {str(command_name)}")
         if command_name == "add":
             options = {opt['name']: opt['value'] for opt in data['data'].get('options', [])}
             query = options.get('query')
             deckname = options.get('deckname')
+            print(f"Query {query}")
+            print(f"Deckname {deckname}")
 
-            # Start the instance if its paused or stopped
-            thread_start_instance = threading.Thread(
-                target=start_instance,
-            )
-            thread_start_instance.start()
+            try:
+                # Start the instance if its paused or stopped
+                thread_start_instance = threading.Thread(
+                    target=start_instance,
+                )
+                thread_start_instance.start()
 
-            # 1. Start the background thread
-            thread = threading.Thread(
-                target=background_task,
-                args=(interaction_token, query, deckname)
-            )
-            thread.start()
+                # 1. Start the background thread
+                thread = threading.Thread(
+                    target=background_task,
+                    args=(interaction_token, query, deckname)
+                )
+                thread.start()
 
-            # Type 5 = DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE
-            return jsonify({
-                "type": 5
-            })
+                # Type 5 = DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE
+                return jsonify({
+                    "type": 5
+                })
+            except Exception as e:
+                print(str(e))
+                return "Server Error", 500
 
     return jsonify({"type": 4, "data": {"content": "Unknown command"}})
 
