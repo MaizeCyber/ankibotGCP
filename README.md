@@ -21,16 +21,5 @@ Work in progress...
 
 ## To do
 
-Change from prefix "!add" to slash commands to trigger webhook interaction
-```
-@tree.command(name="add", description="Add two numbers")
-async def add(interaction: discord.Interaction, a: int, b: int):
-    await interaction.response.send_message(f"Result: {a + b}")
-```
-> Once your code is updated to handle HTTP POST requests 
-> Go to the Discord Developer Portal. 
-> Select your App -> General Information. 
-> Find Interactions Endpoint URL. 
-> Paste your Cloud Run service URL here.
-
-Suspend VM when requests have not been received for period
+Increase timeout to catch instance going from suspended to active without timeout (added possible new code)
+Use alerts based on last ankibot execution to keep instance alive for longer (lots of threshold values)

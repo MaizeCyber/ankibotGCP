@@ -13,6 +13,7 @@ import json
 import urllib.request
 import urllib.error
 import os
+import time
 
 """ This is edited to work with a Docker container rather than local host. If you are not running this with docker. uncomment the DEFAULT_URL line and replace the docker url.
 DEFAULT_URL = "http://localhost:8765"
@@ -50,15 +51,31 @@ def invoke(action: str, **params) -> dict:
     request_dict: dict = format_request(action, **params)
     request_json: str = json.dumps(request_dict).encode("utf-8")
 
-    #additional debugging
-    try:
-        request = urllib.request.urlopen(urllib.request.Request(url, request_json), timeout = 10)
+    # Retry Configuration
+    start_time = time.time()
+    max_duration = 60
+    retry_interval = 5
 
-    except urllib.error.URLError as e:
-        raise Exception(f"Failed to reach the server: {e.reason}")
-    except urllib.error.HTTPError as e:
-        raise Exception(f"Server couldn't fulfill the request. Error code: {e.code}")
+    # Attempt to reach the server with a 60-second retry loop
+    while True:
+        try:
+            request = urllib.request.urlopen(urllib.request.Request(url, request_json), timeout=10)
+            break  # Success! Exit the loop.
 
+        except urllib.error.HTTPError as e:
+            # The server responded with an error
+            raise Exception(f"Server couldn't fulfill the request. Error code: {e.code}")
+
+        except urllib.error.URLError as e:
+            # This catches "Connection refused" ([Errno 111]) or "Network unreachable".
+            # We check if we've exceeded our 60-second limit.
+            if time.time() - start_time >= max_duration:
+                raise Exception(f"Failed to reach the server after {max_duration}s: {e.reason}")
+
+            # Wait 5 seconds before the next attempt
+            time.sleep(retry_interval)
+
+    # Process the successful response
     try:
         response: dict = json.load(request)
     except json.JSONDecodeError:
