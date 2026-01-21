@@ -1,7 +1,8 @@
 resource "google_cloud_run_v2_service" "ankibot" {
   name                = var.run_name
   location            = var.run_region
-  ingress             = "INGRESS_TRAFFIC_INTERNAL_ONLY"
+  ingress             = "INGRESS_TRAFFIC_ALL"
+  invoker_iam_disabled = true
   deletion_protection = false # set to "true" in production
 
   template {
