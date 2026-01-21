@@ -6,8 +6,6 @@ while fuser /var/lib/dpkg/lock-frontend /var/lib/apt/lists/lock /var/cache/apt/a
     sleep 5
 done
 echo "Apt is free. Proceeding with installation."
-# Exit immediately if a command fails
-set -e
 
 # --- DISK MOUNTING LOGIC ---
 DEVICE_NAME="google-anki-data-disk"

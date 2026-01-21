@@ -16,7 +16,7 @@ module "ankibot-service" {
   run_network    = google_compute_network.ankinetwork.id
   run_subnetwork = google_compute_subnetwork.anki_internal_range.id
   sa_email       = google_service_account.anki_sa.email
-  container_name = "docker.io/maizecyber/ankibot:gcpv2.1"
+  container_name = "docker.io/maizecyber/ankibot:gcpv2.2"
   local_ip       = module.anki-desktop-vm.local_ip
   instance_name     = "anki-desktop-1"
   run_zone          = var.project_zone

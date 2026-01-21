@@ -94,7 +94,7 @@ def suspend_instance() -> None:
     instance_client = compute_v1.InstancesClient()
     time.sleep(60)
     try:
-        instance_client.SuspendInstanceRequest(project=project_id, zone=zone, instance=instance_name)
+        instance_client.suspend(project=project_id, zone=zone, instance=instance_name)
         print("Instance suspend sent")
     except Exception as e:
         print(f"Could not suspend instance start: {str(e)}", file=sys.stderr)

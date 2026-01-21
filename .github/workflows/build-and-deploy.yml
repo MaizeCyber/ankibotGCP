@@ -22,7 +22,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: maizecyber/ankibot:gcpv2.1
+          tags: maizecyber/ankibot:gcpv2.2
 
   terraform:
     name: 'Terraform'
