@@ -89,13 +89,3 @@ def start_instance():
     except Exception as e:
         print(f"Could not determine server state: {str(e)}", file=sys.stderr)
         return "Error: Server status could not be found"
-
-def suspend_instance() -> None:
-    instance_client = compute_v1.InstancesClient()
-    time.sleep(60)
-    try:
-        instance_client.suspend(project=project_id, zone=zone, instance=instance_name)
-        print("Instance suspend sent")
-    except Exception as e:
-        print(f"Could not suspend instance start: {str(e)}", file=sys.stderr)
-    return None

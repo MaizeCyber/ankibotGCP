@@ -17,3 +17,18 @@ resource "google_project_service" "vertex_ai" {
   project = var.project_name
   service = "aiplatform.googleapis.com"
 }
+
+resource "google_project_service" "eventarc" {
+  service            = "eventarc.googleapis.com"
+  disable_on_destroy = false
+}
+
+resource "google_project_service" "pubsub" {
+  service            = "pubsub.googleapis.com"
+  disable_on_destroy = false
+}
+
+resource "google_project_service" "cloudfunction" {
+  service            = "cloudfunctions.googleapis.com"
+  disable_on_destroy = false
+}

@@ -17,7 +17,7 @@ from flask import Flask, jsonify, request
 from nacl.signing import VerifyKey
 from nacl.exceptions import BadSignatureError
 
-from ankiexpanse.src.gcpresume import start_instance, suspend_instance
+from ankiexpanse.src.gcpresume import start_instance
 from ankiexpanse.src import config
 from ankiexpanse.src import create
 
@@ -53,11 +53,6 @@ def background_task(interaction_token, query, deckname):
         confirmation = f"Done! Added **{note_json['fields']['Key']}** to deck **{note_json['deckName']}**."
         formatted_json = json.dumps(note_json, indent=2, ensure_ascii=False)
         content = f"{confirmation}\n```json\n{formatted_json}```"
-
-        thread_suspend = threading.Thread(
-            target=suspend_instance
-        )
-        thread_suspend.start()
 
     except Exception as e:
         content = f"Uh oh, something went wrong: `{str(e)}`"

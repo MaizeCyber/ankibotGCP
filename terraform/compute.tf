@@ -25,3 +25,44 @@ module "ankibot-service" {
   discord_bot_token = var.discord_bot_token
   secret_trigger    = var.secret_trigger
 }
+
+resource "google_cloudfunctions2_function" "instance_suspend_function" {
+  name        = "instance-suspend"
+  location    = var.project_region
+  description = "Suspends instance if cloud run has not been used"
+
+  build_config {
+    runtime     = "python310"
+    entry_point = "handle_eventarc_trigger"
+    source {
+      storage_source {
+        bucket = google_storage_bucket.function_bucket.name
+        object = google_storage_bucket_object.function_object.name
+      }
+    }
+  }
+
+  service_config {
+    max_instance_count = 1
+    available_memory   = "512M"
+    timeout_seconds    = 60
+    ingress_settings = "ALLOW_INTERNAL_ONLY"
+
+    environment_variables = {
+      PROJECT_ZONE  = var.project_zone
+      INSTANCE_NAME = "anki-desktop-1"
+      PROJECT_NAME = var.project_id
+    }
+    all_traffic_on_latest_revision = true
+    service_account_email = google_service_account.stop_function_sa.email
+  }
+
+  event_trigger {
+    trigger_region = var.project_region
+    event_type     = "google.cloud.pubsub.topic.v1.messagePublished"
+    pubsub_topic   = google_pubsub_topic.server_empty_topic.id
+    retry_policy   = "RETRY_POLICY_RETRY"
+    service_account_email = google_service_account.eventarc.email
+  }
+
+}
