@@ -36,7 +36,7 @@ resource "google_project_iam_member" "anki_sa_instance_admin" {
 data "google_project" "project" {}
 
 resource "google_pubsub_topic_iam_member" "monitoring_publisher" {
-  topic      = google_pubsub_topic.server_empty_topic.name
+  topic      = google_pubsub_topic.ankibot_idle_topic.name
   role       = "roles/pubsub.publisher"
   member     = "serviceAccount:service-${data.google_project.project.number}@gcp-sa-monitoring-notification.iam.gserviceaccount.com"
   depends_on = [google_monitoring_notification_channel.pubsub_channel]
@@ -78,7 +78,24 @@ resource "google_service_account" "stop_function_sa" {
 }
 
 resource "google_project_iam_member" "function_stop_instance" {
-  project = var.project_id
+  project = var.project_name
   role    = "roles/compute.instanceAdmin.v1"
   member  = "serviceAccount:${google_service_account.stop_function_sa.email}"
+}
+
+resource "google_service_account" "eventarc" {
+  account_id   = "eventarc-trigger-sa"
+  display_name = "Eventarc Trigger Service Account"
+}
+
+resource "google_project_iam_member" "eventreceiver" {
+  project = var.project_name
+  role    = "roles/eventarc.eventReceiver"
+  member  = "serviceAccount:${google_service_account.eventarc.email}"
+}
+
+resource "google_project_iam_member" "runinvoker" {
+  project = var.project_name
+  role    = "roles/run.invoker"
+  member  = "serviceAccount:${google_service_account.eventarc.email}"
 }
