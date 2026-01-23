@@ -60,7 +60,7 @@ resource "google_cloudfunctions2_function" "instance_suspend_function" {
   event_trigger {
     trigger_region        = var.project_region
     event_type            = "google.cloud.pubsub.topic.v1.messagePublished"
-    pubsub_topic          = google_pubsub_topic.ankibot-idle-topic.id
+    pubsub_topic          = google_pubsub_topic.ankibot_idle_topic.id
     retry_policy          = "RETRY_POLICY_RETRY"
     service_account_email = google_service_account.eventarc.email
   }

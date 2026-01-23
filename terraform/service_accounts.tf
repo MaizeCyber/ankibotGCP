@@ -36,7 +36,7 @@ resource "google_project_iam_member" "anki_sa_instance_admin" {
 data "google_project" "project" {}
 
 resource "google_pubsub_topic_iam_member" "monitoring_publisher" {
-  topic      = google_pubsub_topic.ankibot-idle-topic.name
+  topic      = google_pubsub_topic.ankibot_idle_topic.name
   role       = "roles/pubsub.publisher"
   member     = "serviceAccount:service-${data.google_project.project.number}@gcp-sa-monitoring-notification.iam.gserviceaccount.com"
   depends_on = [google_monitoring_notification_channel.pubsub_channel]
