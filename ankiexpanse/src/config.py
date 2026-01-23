@@ -5,7 +5,7 @@ Secret keys should be set as environment variables.
 
 import os
 
-DISCORD_PUBLIC_KEY = os.getenv("DISCORD_BOT_TOKEN")
+DISCORD_PUBLIC_KEY = os.getenv("DISCORD_PUBLIC_KEY")
 DISCORD_APP_ID = os.getenv("DISCORD_APP_ID")
 
 default_deckname = "anki-helper"

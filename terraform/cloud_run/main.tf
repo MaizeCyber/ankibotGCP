@@ -27,7 +27,7 @@ resource "google_cloud_run_v2_service" "ankibot" {
         value = var.local_ip
       }
       env {
-        name = "DISCORD_BOT_TOKEN"
+        name = "DISCORD_PUBLIC_KEY"
         value_source {
           secret_key_ref {
             secret  = google_secret_manager_secret.discord_token.secret_id

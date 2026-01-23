@@ -22,7 +22,7 @@ module "ankibot-service" {
   run_zone       = var.project_zone
   discord_app_id = var.discord_app_id
   # Secrets
-  discord_bot_token = var.discord_bot_token
+  discord_public_key = var.discord_public_key
   secret_trigger    = var.secret_trigger
 }
 

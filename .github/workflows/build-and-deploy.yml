@@ -31,7 +31,7 @@ jobs:
     needs: docker
     environment: production
     env:
-      TF_VAR_discord_bot_token: ${{ secrets.DISCORD_TOKEN }}
+      TF_VAR_discord_public_key: ${{ secrets.DISCORD_TOKEN }}
       TF_VAR_discord_app_id: ${{ secrets.APP_ID }}
       TF_VAR_secret_trigger: ${{ github.run_id }}
       TF_VAR_project_name: ${{ secrets.PROJECT_NAME }}

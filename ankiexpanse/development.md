@@ -25,13 +25,13 @@ deactivate() {
   # Unset my personal local environment variables
   # These were set at the bottom of this file
   unset OPENAI_API_KEY
-  unset DISCORD_BOT_TOKEN
+  unset DISCORD_PUBLIC_KEY
 }
 ...
 
 # My personal local environment variables
 # Make sure to unset in deactivate() above
 export OPENAI_API_KEY="openai-api-secret-key"
-export DISCORD_BOT_TOKEN="discord.bot.token"
+export DISCORD_PUBLIC_KEY="discord.bot.token"
 ```
 More info [here](https://stackoverflow.com/a/38645983/14514959).
