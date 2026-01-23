@@ -54,10 +54,13 @@ gcloud storage buckets create --location $TF_VAR_project_region gs://${TF_VAR_pr
 gcloud storage buckets update gs://${TF_VAR_project_name}-tfstate --versioning
 ```
 
-Edit line 9 of provider.tf with the full name of your newly created bucket. 
+Edit line 3 of terraform/provider.tf with the full name of your newly created bucket. 
 > bucket  = "testminecraft-483804-tfstate"
 
 Finally run these terraform commands in order:
+```
+cd terraform
+```
 ```
 terraform init
 ```
@@ -73,9 +76,13 @@ terraform apply
 
 If you encounter an error during apply similar to "googleapi: Error 403:", just wait a few minutes then run plan and apply again. Sometimes it takes a few minutes for the APIs to enable in the project.
 
-Once apply is complete, terraform will output out three values:
+Once apply is complete, terraform will output a URL, please note this down:
 ```
 cloud_run_url = "https://<sevice_string>.a.run.app"
-server_ipv4_address = "<your ipv4 here>"
-server_ipv6_address = "<your ipv6 here>"
 ```
+Next, 
+https://remotedesktop.google.com/access
+
+## To Do and Improvements
+
+I realize this setup is quite involved. Ideally I would like to programmatically install, login, and add plugins to Anki on the instance. Please reach out if you know of any consistent ways to do this, or have heard of a project that has accomplished this.
