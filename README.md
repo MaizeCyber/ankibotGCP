@@ -1,7 +1,5 @@
 # ankibotGCP
-A deployable instance of anki desktop and the anki-helper bot to automatically create anki flashcards via discord slash commands. 
-
-gcloud compute ssh anki-desktop-1 -- -L 3000:localhost:3000
+A deployable instance of anki desktop and the anki-helper bot to automatically create anki flashcards via discord slash commands.
 
 ## Description
 
@@ -33,18 +31,12 @@ Please note, this bot currently only works for Spanish, Chinese, and Japanese.
 4. Under "Installation", find "Install Link" and change this to None
 5. Under "Bot", scroll down to "token", click reset, then note down your bot key.
 6. Still under bot, switch off the toggle for "Public Bot"
-7. Now, open your command line and execute the bot_startup.py script with
-```
-python3 bot_startup.py
-```
-When prompted, enter the App ID of your discord bot that you copied earlier, then enter your bot token (not your public key).
-This step ensures your bot will know how to handle the "add" command.
 
 ### Terraform Setup
 
 Next define the following as environment variables in your terminal:
 ```
-export TF_VAR_discord_public_key=<your public key> # The public key you copied earlier
+export TF_VAR_discord_token=<your token> # The public key you copied earlier
 export TF_VAR_discord_app_id=<your app ID> # The App ID you coped earlier
 export TF_VAR_project_name=<your project id> # The full project id, i.e. server-123456
 export TF_VAR_project_region=<your selected region> # The region of the project. Choose one near you that also supports e2-medium Instances: https://cloud.google.com/about/locations
@@ -80,23 +72,16 @@ terraform apply
 
 If you encounter an error during apply similar to "googleapi: Error 403:", just wait a few minutes then run apply again. Sometimes it takes a few minutes for the APIs to enable in the project.
 
-Once apply is complete, terraform will output a URL, please note this down:
+Go to https://console.cloud.google.com/compute/instances where you should see your instance "anki-desktop-1" listed. Click "SSH" and start a session to transfer your SSH keys to the instance.
+
+In your Google Cloud console, enter the following forwarding command.
 ```
-cloud_run_url = "https://<sevice_string>.a.run.app"
+gcloud compute ssh anki-desktop-1 -- -L 3000:localhost:3000
 ```
 
-Back in the Discord Developer website, go to "General Information", scroll down to the "Interactions Endpoint URL", and paste in the link output from Terraform. Hit save.
+In the top right corner, of the Cloud Shell Terminal, click "Web Preview" and preview on Port 3000.
 
-Next, go to 
-https://remotedesktop.google.com/headless
-
-Click Begin > Next > Authorize and copy the command under Debian Linux
-
-Go to https://console.cloud.google.com/compute/instances where you should see your instance "anki-desktop-1" listed. Click "SSH" and paste the command copied for Debian Linux and press enter. You will need to create a pin, feel free to keep it simple, you will only need to remember it for the next step.
-
-Under https://remotedesktop.google.com/access, remote into the instance with the pin you created.
-
-Open anki by searching for it in the bottom left corner. Open it up and log into your Anki account like normal.
+In the new tab, configure anki as normal and log into your Anki account like normal.
 
 In the top menu bar of Anki, click on "Tools" and then Add-ons. 
 
@@ -115,23 +100,26 @@ Click on "AnkiConnect", then click on "Config" in the bottom left corner. Make s
     "ignoreOriginList": [],
     "webBindAddress": "0.0.0.0",
     "webBindPort": 8765,
-    "webCorsOriginList": [
-        "http://localhost"
-    ]
+    "webCorsOrigin": "http://localhost",
+    "webCorsOriginList": ["*"]
 }
 ```
 
-Close anki and restart it. Go to "tools" in the top menu bar again and click "Auto Sync Options". Set both values to 1 minute.
+Close anki and restart it by restarting the docker container:
 
-Close out of Chrome Remote Desktop.
+```
+docker restart <pid>
+```
+
+Go to "tools" in the top menu bar again and click "Auto Sync Options". Set both values to 1 minute.
+
+Close out of the anki tab.
 
 ## Use
 
-To install the bot on a discord channel, go to the OAuth2 section in the Discord developer website. Under OAuth2 URL Generator tick the box next to "Bot". Under "Bot Permissions" tick "Manage Webhooks", "Send Messages", "Create public threads", "Create private threads", "Send Messages in Threads", "Send TTS Messages", "Manage Messages", "Manage Threads", "Attach Files", "Use Slash Commands".
+The easiest way to install is via the install link under "Installation" in the Discord developer portal. Just be sure to set it back to "None" after finishing the installation.
 
-Copy the Generated URL, paste it in your browser, and add it to the channel of your choice.
-
-Once the app is installed, you use the bot by typing the slash command "/add" followed by the word or phrase you want to add to your deck, followed by the language/deckname (currently supports Spanish, Mandarin, and Japanese).
+Once the app is installed, you use the bot by typing the slash command "!add" followed by the word or phrase you want to add to your deck, followed by the language/deckname (currently supports Spanish, Mandarin, and Japanese).
 
 ## To Do and Improvements
 
