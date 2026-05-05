@@ -1,4 +1,4 @@
-variable "discord_public_key" {
+variable "discord_token" {
   type      = string
   ephemeral = true # Matches the child module
   sensitive = true
