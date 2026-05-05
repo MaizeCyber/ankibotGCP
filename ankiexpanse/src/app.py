@@ -17,7 +17,6 @@ from flask import Flask, jsonify, request
 from nacl.signing import VerifyKey
 from nacl.exceptions import BadSignatureError
 
-from ankiexpanse.src.gcpresume import start_instance
 from ankiexpanse.src import config
 from ankiexpanse.src import create
 
@@ -82,28 +81,6 @@ def interactions():
             deckname = options.get('deckname')
             print(f"Query {query}")
             print(f"Deckname {deckname}")
-
-            try:
-                # Start the instance if its paused or stopped
-                thread_start_instance = threading.Thread(
-                    target=start_instance,
-                )
-                thread_start_instance.start()
-
-                # 1. Start the background thread
-                thread = threading.Thread(
-                    target=background_task,
-                    args=(interaction_token, query, deckname)
-                )
-                thread.start()
-
-                # Type 5 = DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE
-                return jsonify({
-                    "type": 5
-                })
-            except Exception as e:
-                print(str(e))
-                return "Server Error", 500
 
     return jsonify({"type": 4, "data": {"content": "Unknown command"}})
 

@@ -1,6 +1,8 @@
 # ankibotGCP
 A deployable instance of anki desktop and the anki-helper bot to automatically create anki flashcards via discord slash commands. 
 
+gcloud compute ssh anki-desktop-1 -- -L 3000:localhost:3000
+
 ## Description
 
 This is an expansion of ryanlin's anki-helper program to automatically create flashcards for anki via ChatGPT requests and Discord commands https://github.com/ryanlin/anki-helper
