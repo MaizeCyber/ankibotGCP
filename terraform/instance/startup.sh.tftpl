@@ -97,11 +97,11 @@ docker run -d \
     -p 8765:8765 \
     mlcivilengineer/anki-desktop-docker:main
 
-DISCORD_PUBLIC_KEY=$(gcloud secrets versions access latest --secret="discord_token")
-GOOGLE_CLOUD_PROJECT=${project_name}
-DESKTOP_LOCAL_IP="localhost"
-DISCORD_APP_ID=${discord_app_id}
-GOOGLE_CLOUD_REGION=${project_region}
+export DISCORD_PUBLIC_KEY=$(gcloud secrets versions access latest --secret="discord_token")
+export GOOGLE_CLOUD_PROJECT=${project_name}
+export DESKTOP_LOCAL_IP="localhost"
+export DISCORD_APP_ID=${discord_app_id}
+export GOOGLE_CLOUD_REGION=${project_region}
 
 echo "Running ankibot docker container"
 docker run -d \
