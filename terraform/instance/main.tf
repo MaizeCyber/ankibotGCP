@@ -17,9 +17,9 @@ resource "google_compute_instance" "anki_desktop" {
   }
 
   metadata_startup_script = templatefile("${path.module}/startup.sh.tftpl", {
-    project_name   = var.gcp_project_id
+    project_name   = var.project_name
     discord_app_id = var.discord_app_id
-    project_region = var.gcp_region
+    project_region = var.project_region
   })
 
   service_account {
