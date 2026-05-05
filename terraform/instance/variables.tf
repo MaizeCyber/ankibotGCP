@@ -4,3 +4,6 @@ variable "instance_type" {}
 variable "instance_network" {}
 variable "sa_email" {}
 variable "instance_subnetwork" {}
+variable "project_name" {}
+variable "discord_app_id" {}
+variable "project_region" {}
